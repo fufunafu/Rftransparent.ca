@@ -1,0 +1,112 @@
+<section class="image-with-text section{% if section.settings.bg_alt %} section--alt{% endif %}">
+  <div class="container">
+    <div class="image-with-text__inner{% if section.settings.image_position == 'right' %} image-with-text__inner--reverse{% endif %}">
+      <!-- Media -->
+      <div class="image-with-text__media reveal">
+        {%- if section.settings.image != blank -%}
+          <img
+            class="image-with-text__image"
+            src="{{ section.settings.image | image_url: width: 900 }}"
+            srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 900 }} 900w"
+            sizes="(max-width:1024px) 100vw, 50vw"
+            alt="{{ section.settings.image_alt | default: section.settings.heading }}"
+            loading="lazy"
+            width="900"
+            height="1125"
+          >
+        {%- else -%}
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#2E4E49,#1C3330);border-radius:var(--radius-lg);"></div>
+        {%- endif -%}
+
+        {%- if section.settings.badge_number != blank -%}
+          <div class="image-with-text__badge">
+            <div class="image-with-text__badge-num">{{ section.settings.badge_number }}</div>
+            <div class="image-with-text__badge-label">{{ section.settings.badge_label }}</div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Content -->
+      <div class="image-with-text__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow reveal">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        <h2 class="reveal reveal--delay-1">{{ section.settings.heading }}</h2>
+
+        {%- if section.settings.text != blank -%}
+          <p class="reveal reveal--delay-2">{{ section.settings.text }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.stat_1_num != blank -%}
+          <div class="image-with-text__stats reveal reveal--delay-3">
+            {%- if section.settings.stat_1_num != blank -%}
+              <div class="image-with-text__stat">
+                <div class="image-with-text__stat-num">{{ section.settings.stat_1_num }}</div>
+                <div class="image-with-text__stat-label">{{ section.settings.stat_1_label }}</div>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.stat_2_num != blank -%}
+              <div class="image-with-text__stat">
+                <div class="image-with-text__stat-num">{{ section.settings.stat_2_num }}</div>
+                <div class="image-with-text__stat-label">{{ section.settings.stat_2_label }}</div>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.stat_3_num != blank -%}
+              <div class="image-with-text__stat">
+                <div class="image-with-text__stat-num">{{ section.settings.stat_3_num }}</div>
+                <div class="image-with-text__stat-label">{{ section.settings.stat_3_label }}</div>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.stat_4_num != blank -%}
+              <div class="image-with-text__stat">
+                <div class="image-with-text__stat-num">{{ section.settings.stat_4_num }}</div>
+                <div class="image-with-text__stat-label">{{ section.settings.stat_4_label }}</div>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank -%}
+          <div class="reveal reveal--delay-4">
+            <a href="{{ section.settings.cta_url }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with Text",
+  "settings": [
+    { "type": "checkbox", "id": "bg_alt", "label": "Alternate background", "default": false },
+    { "type": "select", "id": "image_position", "label": "Image position", "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ], "default": "left" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text" },
+    { "type": "text", "id": "badge_number", "label": "Badge number (e.g. 101+)" },
+    { "type": "text", "id": "badge_label", "label": "Badge label" },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Built on 15+ Years of Glass Expertise" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "header", "content": "Stats (optional, up to 4)" },
+    { "type": "text", "id": "stat_1_num", "label": "Stat 1 number", "default": "101+" },
+    { "type": "text", "id": "stat_1_label", "label": "Stat 1 label", "default": "Dealer Locations" },
+    { "type": "text", "id": "stat_2_num", "label": "Stat 2 number", "default": "15+" },
+    { "type": "text", "id": "stat_2_label", "label": "Stat 2 label", "default": "Years of Experience" },
+    { "type": "text", "id": "stat_3_num", "label": "Stat 3 number", "default": "200+" },
+    { "type": "text", "id": "stat_3_label", "label": "Stat 3 label", "default": "Products Available" },
+    { "type": "text", "id": "stat_4_num", "label": "Stat 4 number" },
+    { "type": "text", "id": "stat_4_label", "label": "Stat 4 label" },
+    { "type": "header", "content": "CTA Button (optional)" },
+    { "type": "text", "id": "cta_label", "label": "Button label" },
+    { "type": "url", "id": "cta_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Image with Text" }]
+}
+{% endschema %}

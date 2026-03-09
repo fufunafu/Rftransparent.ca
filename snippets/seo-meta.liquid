@@ -1,0 +1,121 @@
+{% comment %}
+  SEO Meta Snippet
+  Outputs Open Graph, Twitter Card, canonical URL, and schema.org JSON-LD
+{% endcomment %}
+
+{%- assign og_title = page_title | escape -%}
+{%- assign og_description = page_description | default: shop.description | default: shop.name | escape -%}
+{%- assign og_url = canonical_url | default: request.origin | append: request.path -%}
+{%- assign og_type = 'website' -%}
+
+{%- if template.name == 'product' -%}
+  {%- assign og_type = 'product' -%}
+  {%- assign og_image = product.featured_image | image_url: width: 1200 -%}
+{%- elsif template.name == 'article' -%}
+  {%- assign og_type = 'article' -%}
+  {%- assign og_image = article.image | image_url: width: 1200 -%}
+{%- elsif settings.og_image != blank -%}
+  {%- assign og_image = settings.og_image | image_url: width: 1200 -%}
+{%- else -%}
+  {%- assign og_image = '' -%}
+{%- endif -%}
+
+<link rel="canonical" href="{{ og_url }}">
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:title" content="{{ og_title }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:description" content="{{ og_description }}">
+{%- if og_image != blank -%}
+  <meta property="og:image" content="{{ og_image }}">
+  <meta property="og:image:width" content="1200">
+{%- endif -%}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title }}">
+<meta name="twitter:description" content="{{ og_description }}">
+{%- if og_image != blank -%}
+  <meta name="twitter:image" content="{{ og_image }}">
+{%- endif -%}
+
+<!-- Schema.org JSON-LD -->
+{%- if template.name == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "logo": {
+    "@type": "ImageObject",
+    "url": "{{ settings.favicon | image_url: width: 200 }}"
+  },
+  "description": {{ og_description | json }},
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "CA"
+  },
+  "sameAs": [
+    {{ settings.social_instagram | json }},
+    {{ settings.social_facebook | json }},
+    {{ settings.social_linkedin | json }}
+  ]
+}
+</script>
+
+{%- elsif template.name == 'product' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ shop.url | append: product.url | json }},
+  "description": {{ product.description | strip_html | json }},
+  {%- if product.featured_image -%}
+  "image": {{ product.featured_image | image_url: width: 1200 | json }},
+  {%- endif -%}
+  "brand": {
+    "@type": "Brand",
+    "name": {{ shop.name | json }}
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "lowPrice": {{ product.price_min | money_without_currency | json }},
+    "highPrice": {{ product.price_max | money_without_currency | json }},
+    "offerCount": {{ product.variants.size }},
+    "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}"
+  }
+}
+</script>
+
+{%- elsif template.name == 'collection' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ collection.title | json }},
+  "url": {{ shop.url | append: collection.url | json }},
+  "description": {{ collection.description | strip_html | default: '' | json }}
+}
+</script>
+
+{%- elsif template.name == 'article' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ article.title | json }},
+  "url": {{ shop.url | append: article.url | json }},
+  "datePublished": {{ article.published_at | date: '%Y-%m-%d' | json }},
+  "dateModified": {{ article.published_at | date: '%Y-%m-%d' | json }},
+  "author": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+  }
+}
+</script>
+{%- endif -%}

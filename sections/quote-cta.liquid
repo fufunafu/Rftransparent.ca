@@ -1,0 +1,95 @@
+<section class="quote-cta section section--dark" id="quote-cta">
+  <div class="container">
+    <div class="quote-cta__inner">
+      <!-- Left: copy -->
+      <div class="quote-cta__copy">
+        <p class="eyebrow eyebrow--light reveal">{{ section.settings.eyebrow | default: "Get Started Today" }}</p>
+        <h2 class="quote-cta__heading reveal reveal--delay-1">{{ section.settings.heading | default: "Get Your Personalized Quote" }}</h2>
+        <p class="quote-cta__text reveal reveal--delay-2">{{ section.settings.text | default: "Tell us about your project and we'll connect you with your nearest dealer for a smooth, customized experience." }}</p>
+
+        <ul class="quote-cta__features reveal reveal--delay-3">
+          {%- for block in section.blocks -%}
+            <li class="quote-cta__feature">
+              <svg class="quote-cta__feature-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              {{ block.settings.feature }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <!-- Right: mini quote form -->
+      <div class="quote-cta__form reveal reveal--delay-2">
+        <h3 style="font-family:var(--font-heading);font-size:1.375rem;margin-bottom:1.5rem;color:var(--color-white);">Quick Quote Request</h3>
+        <form action="/pages/contact" method="get" class="quote-form">
+          <div class="quote-form-grid">
+            <div class="form-group">
+              <label class="form-label" for="quote-first">First Name</label>
+              <input type="text" id="quote-first" name="first_name" class="form-input" placeholder="John" autocomplete="given-name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="quote-last">Last Name</label>
+              <input type="text" id="quote-last" name="last_name" class="form-input" placeholder="Smith" autocomplete="family-name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="quote-email">Email Address</label>
+            <input type="email" id="quote-email" name="email" class="form-input" placeholder="john@example.com" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="quote-height">Railing Height</label>
+            <select id="quote-height" name="height" class="form-select">
+              <option value="">Select height</option>
+              <option value="36">36" (Standard)</option>
+              <option value="42">42" (Commercial)</option>
+              <option value="48">48" (High Deck)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="quote-desc">Project Description</label>
+            <textarea id="quote-desc" name="description" class="form-textarea" placeholder="Describe your project, location, and any specific requirements…" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn--accent btn--full" style="margin-top:0.5rem;">
+            Send Quote Request
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);text-align:center;margin-top:0.75rem;">No commitment required &bull; Response within 1 business day</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quote CTA",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Get Started Today" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get Your Personalized Quote" },
+    { "type": "textarea", "id": "text", "label": "Description" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature text", "default": "Personalized plans for every project" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Quote CTA",
+    "blocks": [
+      { "type": "feature", "settings": { "feature": "Personalized plans for every project" } },
+      { "type": "feature", "settings": { "feature": "Guided directly to your nearest dealer" } },
+      { "type": "feature", "settings": { "feature": "Expert engineering support included" } },
+      { "type": "feature", "settings": { "feature": "Fast response within 1 business day" } }
+    ]
+  }]
+}
+{% endschema %}

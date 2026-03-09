@@ -1,0 +1,100 @@
+<section class="featured-collections section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-header__left">
+        <p class="eyebrow reveal">{{ section.settings.eyebrow | default: "Our Collections" }}</p>
+        <h2 class="reveal reveal--delay-1">{{ section.settings.heading | default: "Engineered for Every Build" }}</h2>
+      </div>
+      <a href="/collections/all-products" class="btn btn--secondary reveal reveal--delay-2">View All Products</a>
+    </div>
+
+    <div class="collections-grid{% if section.settings.layout == 'featured' %} collections-grid--featured{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- assign col = block.settings -%}
+        {%- if col.collection != blank -%}
+          {%- assign coll = collections[col.collection] -%}
+          <a
+            href="{{ coll.url }}"
+            class="collection-card reveal reveal--delay-{{ forloop.index }}"
+            aria-label="Shop {{ coll.title }}"
+          >
+            {%- if col.image != blank -%}
+              <img
+                class="collection-card__image"
+                src="{{ col.image | image_url: width: 800 }}"
+                srcset="{{ col.image | image_url: width: 400 }} 400w, {{ col.image | image_url: width: 800 }} 800w"
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
+                alt="{{ coll.title }}"
+                loading="lazy"
+                width="800"
+                height="1000"
+              >
+            {%- elsif coll.image != blank -%}
+              <img
+                class="collection-card__image"
+                src="{{ coll.image | image_url: width: 800 }}"
+                srcset="{{ coll.image | image_url: width: 400 }} 400w, {{ coll.image | image_url: width: 800 }} 800w"
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
+                alt="{{ coll.title }}"
+                loading="lazy"
+                width="800"
+                height="1000"
+              >
+            {%- else -%}
+              <div style="position:absolute;inset:0;background:linear-gradient(135deg,#2E4E49,#1C3330);"></div>
+            {%- endif -%}
+
+            <div class="collection-card__overlay"></div>
+
+            <div class="collection-card__arrow" aria-hidden="true">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M3 11L11 3M11 3H5M11 3v6"/>
+              </svg>
+            </div>
+
+            <div class="collection-card__content">
+              <span class="collection-card__tag">{{ col.tag | default: "Collection" }}</span>
+              <h3 class="collection-card__name">{{ coll.title }}</h3>
+              <span class="collection-card__count">{{ coll.products_count }} products</span>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collections",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Collections" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Engineered for Every Build" },
+    { "type": "select", "id": "layout", "label": "Grid layout", "options": [
+        { "value": "equal", "label": "Equal grid (4 col)" },
+        { "value": "featured", "label": "Featured (1 large + 3 small)" }
+      ], "default": "featured" }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "limit": 4,
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Override image (optional)" },
+        { "type": "text", "id": "tag", "label": "Tag label", "default": "Collection" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Featured Collections",
+    "blocks": [
+      { "type": "collection" },
+      { "type": "collection" },
+      { "type": "collection" },
+      { "type": "collection" }
+    ]
+  }]
+}
+{% endschema %}

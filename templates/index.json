@@ -1,0 +1,234 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design_4.jpg",
+        "image_alt": "Glass railing installation on modern deck",
+        "eyebrow": "Glass Railing",
+        "heading": "Making Glass Railing Accessible to All",
+        "subtext": "The preferred supplier for frameless glass railing in North America. 101+ dealer locations nationwide.",
+        "cta_primary_label": "Shop Products",
+        "cta_primary_url": "/collections/glass-railing",
+        "cta_secondary_label": "Get a Quote",
+        "cta_secondary_url": "/pages/pricing",
+        "review_score": "4.9",
+        "review_count": "500+"
+      }
+    },
+    "ticker": {
+      "type": "stats-ticker",
+      "settings": {}
+    },
+    "about-1": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Our Story",
+        "heading": "Beautifully Simple.",
+        "text": "Since 2010, RF Transparent has been at the forefront of the industry, delivering exceptional frameless glass railing solutions. We focus exclusively on this craft, ensuring the highest quality and innovation in every project.",
+        "image": "shopify://shop_images/glass-railing-leveler.jpg",
+        "image_position": "left",
+        "badge_number": "15+",
+        "badge_label": "Years of Excellence",
+        "stat_1_num": "101+",
+        "stat_1_label": "Dealer Locations",
+        "stat_2_num": "15+",
+        "stat_2_label": "Years of Experience",
+        "stat_3_num": "200+",
+        "stat_3_label": "Products Available",
+        "stat_4_num": "#1",
+        "stat_4_label": "Glass Railing Supplier",
+        "cta_label": "Our Story",
+        "cta_url": "/pages/about"
+      }
+    },
+    "collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "col-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "glass-railing",
+            "tag": "Most Popular"
+          }
+        },
+        "col-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "glass-panels",
+            "tag": "Panels"
+          }
+        },
+        "col-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "railing-hardware",
+            "tag": "Hardware"
+          }
+        },
+        "col-4": {
+          "type": "collection",
+          "settings": {
+            "collection": "gate-hardware",
+            "tag": "Gate Hardware"
+          }
+        }
+      },
+      "block_order": ["col-1", "col-2", "col-3", "col-4"],
+      "settings": {
+        "eyebrow": "Our Collections",
+        "heading": "Engineered for Every Build",
+        "layout": "featured"
+      }
+    },
+    "products": {
+      "type": "featured-products",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "product": "glass-railing-sidemount-spigot" } },
+        "p2": { "type": "product", "settings": { "product": "glass-railing-engineered-spigot" } },
+        "p3": { "type": "product", "settings": { "product": "glass-railing-40-high-tempered-glass-panels-12mm" } },
+        "p4": { "type": "product", "settings": {} }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": {
+        "eyebrow": "Bestsellers",
+        "heading": "Our Most Popular Products",
+        "collection": "glass-railing"
+      }
+    },
+    "about-2": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Quality You Can Trust",
+        "heading": "Expert Craftsmanship.",
+        "text": "Our products are expertly manufactured with a focus on precision and strength. Each piece is meticulously crafted and carefully packaged at one of our Canadian distribution centers, ensuring the highest quality and reliability.",
+        "image": "shopify://shop_images/glass-railing-moved.jpg",
+        "image_position": "right",
+        "badge_number": "#1",
+        "badge_label": "In Canada",
+        "stat_1_num": "12mm",
+        "stat_1_label": "Thick Glass",
+        "stat_2_num": "10yr",
+        "stat_2_label": "Rust Warranty",
+        "stat_3_num": "3",
+        "stat_3_label": "Distribution Centers",
+        "stat_4_num": "40+",
+        "stat_4_label": "Width Options",
+        "cta_label": "Get a Quote",
+        "cta_url": "/pages/pricing"
+      }
+    },
+    "quote": {
+      "type": "quote-cta",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "feature": "Personalized plans for every project" } },
+        "f2": { "type": "feature", "settings": { "feature": "Guided directly to your nearest dealer" } },
+        "f3": { "type": "feature", "settings": { "feature": "Expert engineering support included" } },
+        "f4": { "type": "feature", "settings": { "feature": "Fast response within 1 business day" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": {
+        "eyebrow": "Get Started",
+        "heading": "Get Your Personalized Quote",
+        "text": "Tell us about your project and we'll connect you with your nearest authorized dealer for a smooth, customized experience from start to finish."
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "name": "Matthew Otten",
+            "location": "Satisfied Client",
+            "text": "Excellent service, great value and so far a terrific product. Installation was easy with proper preparation, and the panels are HEAVY. Looking forward to many years of unobstructed views!",
+            "rating": 5
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "name": "Dave Wilson",
+            "location": "Home Hardware Client",
+            "text": "I initially found out about this company at Home Hardware where they had a very small display. I was happy to browse the website and see more pictures and options to choose from. Highly recommend!! Great product, price and readily available.",
+            "rating": 5
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "name": "Bill Ernewein",
+            "location": "National Decking Client",
+            "text": "At first, I really thought that glass was not going to be an option for my deck as I wanted to do a DIY project. But wow! I was shocked by the pricing.",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {
+        "eyebrow": "Customer Reviews",
+        "heading": "What Our Clients Have to Say"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does it take to get my railing?",
+            "answer": "<p>Orders within Canada are typically delivered within 2\u20135 business days. For the United States, delivery may take 1\u20134 weeks depending on shipping destination and customs clearance.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "What is the difference between RF product and other mainstream brands?",
+            "answer": "<p>Our system is one of the easiest to install on the market. We offer three distinct heights compared to the single height typically available from other brands. Each height comes in about 40 different widths. Our glass is 12mm thick, and our hardware is guaranteed against rust for 10 years.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "What if my local hardware store is not a dealer?",
+            "answer": "<p>No worries! We can deliver to any hardware store, even if they\u2019re not currently a dealer. We\u2019ll reach out to your preferred store to accommodate your needs. If they can\u2019t, we\u2019ll arrange for direct delivery to you.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "How do I install RF Transparent Glass Railing?",
+            "answer": "<p>Our adjustable spigots allow for easy alignment and customization. The variable gap options provide flexibility, so even with minor measurement errors, you\u2019ll achieve a perfect fit. Find detailed instructions on our <a href=\"/pages/installation-instructions\">installation page</a>.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "What are the warranties on the product?",
+            "answer": "<p>We offer a lifetime warranty on our glass, ensuring it is free from manufacturing defects. Our hardware is guaranteed against rust. If you receive any damaged items, we replace them\u2014no questions asked.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "How long does glass railing last?",
+            "answer": "<p>Glass railing is one of the strongest options available. Our glass is over twice as thick as a standard car window, reinforced by the heaviest spigots in the industry. With proper care, glass railings provide years of safety and aesthetic appeal.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "question": "There are no dealers in my area, how do I buy the product?",
+            "answer": "<p>We will locate a hardware store in your area. If you\u2019re in a remote location, we can deliver straight to your home. At RF, we believe that no one should be overlooked.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7"],
+      "settings": {
+        "eyebrow": "FAQ",
+        "heading": "Frequently Asked Questions"
+      }
+    }
+  },
+  "order": ["hero", "ticker", "about-1", "collections", "products", "about-2", "quote", "testimonials", "faq"]
+}

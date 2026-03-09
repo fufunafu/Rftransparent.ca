@@ -1,0 +1,77 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "timeline-1": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "Early 2000",
+        "text": "The notion of affordable glass railing for the average homeowner once seemed far-fetched, as it was typically reserved for high-end custom homes. However, the owners recognized that this had to change.",
+        "image": "shopify://shop_images/glass-railing-1.jpg",
+        "image_position": "left"
+      }
+    },
+    "timeline-2": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "2010",
+        "text": "Opening our first glass railing panel retail outlet in Marieville, Quebec was a pivotal moment. Despite its modest 7,000 sq. ft. size, our commitment to quality and service set us apart, paving the way for further expansion.",
+        "image": "shopify://shop_images/marieville_c99cfceb-e4ae-410d-aa97-c7f7cb9a650a.jpg",
+        "image_position": "right"
+      }
+    },
+    "timeline-3": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "2015",
+        "text": "Expanding into Laval marked our second location's opening, reinforcing our market presence and dedication to excellence and top-notch customer service. We transitioned primarily to a B2B-focused approach.",
+        "image": "shopify://shop_images/laval.jpg",
+        "image_position": "left"
+      }
+    },
+    "timeline-4": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "2020",
+        "text": "Our third location in Saint-Julie, with a 30,000 sq. ft. warehouse, is a significant milestone. We've established the largest distribution centre for glass railing panels and hardware to meet the increasing demand.",
+        "image": "shopify://shop_images/Ste-julie_25be39f3-f8ae-4075-8038-3f50c3aa2a41.jpg",
+        "image_position": "right"
+      }
+    },
+    "timeline-5": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "2022",
+        "text": "RF Transparent reaches a pivotal milestone with our fourth location in Toronto. As the largest distributor in Ontario and Quebec, we're dedicated to making premium glass railing systems affordable and accessible.",
+        "image": "shopify://shop_images/Screenshot_2024-10-01_at_1.15.49_PM.png",
+        "image_position": "left"
+      }
+    },
+    "timeline-6": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "2024",
+        "text": "Today, our products are available at nearly every building supply store across the nation. We've come a long way from the days when glass railing was out of reach for many. We take pride in making a meaningful impact in our community.",
+        "image": "shopify://shop_images/PHOTO-2024-09-11-11-58-05.jpg",
+        "image_position": "right"
+      }
+    },
+    "quote": {
+      "type": "quote-cta",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "feature": "Personalized plans for every project" } },
+        "f2": { "type": "feature", "settings": { "feature": "Guided directly to your nearest dealer" } },
+        "f3": { "type": "feature", "settings": { "feature": "Expert engineering support included" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": {
+        "eyebrow": "Get Started",
+        "heading": "Get Your Personalized Quote",
+        "text": "Tell us about your project and we'll connect you with your nearest authorized dealer."
+      }
+    }
+  },
+  "order": ["main", "timeline-1", "timeline-2", "timeline-3", "timeline-4", "timeline-5", "timeline-6", "quote"]
+}

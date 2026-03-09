@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "cta": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Invisible view",
+        "heading": "Are you ready for clear view?",
+        "text": "I don't know, you tell us!",
+        "image": "shopify://shop_images/glass-railing-1.jpg",
+        "image_position": "left",
+        "cta_label": "Get a Quote",
+        "cta_url": "/pages/pricing"
+      }
+    },
+    "installation": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Easier than it looks",
+        "heading": "Easy Installation",
+        "text": "Check out our installation instructions",
+        "image": "shopify://shop_images/deck5-opt2.jpg",
+        "image_position": "right",
+        "cta_label": "Learn More",
+        "cta_url": "/pages/installation-instructions"
+      }
+    }
+  },
+  "order": ["main", "cta", "installation"]
+}
