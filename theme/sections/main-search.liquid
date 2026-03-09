@@ -1,0 +1,145 @@
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-hero__title">Search</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="search-form-wrapper">
+    <form action="/search" method="get" role="search" class="search-form">
+      <label for="search-input" class="visually-hidden">Search</label>
+      <input
+        type="search"
+        id="search-input"
+        name="q"
+        class="search-form__input"
+        placeholder="Search products, articles, pages..."
+        value="{{ search.terms | escape }}"
+        aria-label="Search"
+      >
+      <button type="submit" class="btn btn--primary search-form__btn">Search</button>
+    </form>
+  </div>
+
+  {%- if search.performed -%}
+    <p class="search-results__heading">
+      {{ search.results_count }} result{%- if search.results_count != 1 -%}s{%- endif -%}
+      for &ldquo;{{ search.terms }}&rdquo;
+    </p>
+
+    {%- if search.results_count == 0 -%}
+      <div style="text-align:center;padding:3rem 1rem;">
+        <p style="color:var(--color-text-muted);margin-bottom:2rem;">No results found. Try a different search term.</p>
+        <a href="/collections/all-products" class="btn btn--secondary">Browse All Products</a>
+      </div>
+    {%- else -%}
+      {%- assign product_results = search.results | where: 'object_type', 'product' -%}
+      {%- assign other_results = search.results | where: 'object_type', 'article' -%}
+      {%- assign page_results = search.results | where: 'object_type', 'page' -%}
+
+      {%- if product_results.size > 0 -%}
+        <h2 class="search-section__title">Products</h2>
+        <div class="collection-grid">
+          {%- for product in product_results -%}
+            {%- render 'product-card', product: product, index: forloop.index -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if other_results.size > 0 -%}
+        <h2 class="search-section__title">Articles</h2>
+        <ul class="search-list">
+          {%- for item in other_results -%}
+            <li class="search-list__item">
+              <a href="{{ item.url }}" class="search-list__link">{{ item.title }}</a>
+              {%- if item.content != blank -%}
+                <p class="search-list__excerpt">{{ item.content | strip_html | truncate: 150 }}</p>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if page_results.size > 0 -%}
+        <h2 class="search-section__title">Pages</h2>
+        <ul class="search-list">
+          {%- for item in page_results -%}
+            <li class="search-list__item">
+              <a href="{{ item.url }}" class="search-list__link">{{ item.title }}</a>
+              {%- if item.content != blank -%}
+                <p class="search-list__excerpt">{{ item.content | strip_html | truncate: 150 }}</p>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+<style>
+  .search-form-wrapper { max-width: 640px; margin: 2rem auto 2.5rem; }
+  .search-form { display: flex; gap: 0.75rem; }
+  .search-form__input {
+    flex: 1;
+    padding: 0.85rem 1.25rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--color-text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-form__input:focus { border-color: var(--color-accent); }
+  .search-form__btn { white-space: nowrap; }
+  .search-results__heading {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .search-section__title {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-dark);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .search-list { list-style: none; padding: 0; margin: 0 0 2rem; }
+  .search-list__item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .search-list__link {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: var(--color-dark);
+    text-decoration: none;
+  }
+  .search-list__link:hover { color: var(--color-accent); }
+  .search-list__excerpt {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Search Results",
+  "settings": []
+}
+{% endschema %}

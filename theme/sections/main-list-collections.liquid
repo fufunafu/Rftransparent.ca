@@ -1,0 +1,71 @@
+<div class="page-hero">
+  <div class="container">
+    {%- render 'breadcrumb' -%}
+    <h1 class="page-hero__title">Collections</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="list-collections-grid">
+    {%- for collection in collections -%}
+      {%- if collection.handle != 'all' and collection.products_count > 0 -%}
+        <a
+          href="{{ collection.url }}"
+          class="collection-card reveal reveal--delay-{{ forloop.index | modulo: 4 | plus: 1 }}"
+          aria-label="Shop {{ collection.title }}"
+        >
+          {%- if collection.image -%}
+            <img
+              class="collection-card__image"
+              src="{{ collection.image | image_url: width: 800 }}"
+              srcset="{{ collection.image | image_url: width: 400 }} 400w, {{ collection.image | image_url: width: 800 }} 800w"
+              sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              alt="{{ collection.title }}"
+              loading="lazy"
+              width="800"
+              height="1000"
+            >
+          {%- else -%}
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#2E4E49,#1C3330);"></div>
+          {%- endif -%}
+
+          <div class="collection-card__overlay"></div>
+
+          <div class="collection-card__arrow" aria-hidden="true">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 11L11 3M11 3H5M11 3v6"/>
+            </svg>
+          </div>
+
+          <div class="collection-card__content">
+            <span class="collection-card__tag">Collection</span>
+            <h3 class="collection-card__name">{{ collection.title }}</h3>
+            <span class="collection-card__count">{{ collection.products_count }} product{{ collection.products_count | pluralize: '', 's' }}</span>
+          </div>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .list-collections-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 3rem 0;
+  }
+  @media (min-width: 640px) {
+    .list-collections-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .list-collections-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collections List",
+  "settings": []
+}
+{% endschema %}

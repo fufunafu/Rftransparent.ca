@@ -1,0 +1,157 @@
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-hero__title">Order {{ order.name }}</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="order-detail">
+    <div class="order-meta">
+      <p><strong>Date:</strong> {{ order.created_at | date: '%B %d, %Y' }}</p>
+      <p><strong>Payment:</strong> {{ order.financial_status_label }}</p>
+      <p><strong>Fulfillment:</strong> {{ order.fulfillment_status_label }}</p>
+    </div>
+
+    <h2 class="order-section__title">Items</h2>
+    <div class="account-table-wrap">
+      <table class="account-table" aria-label="Order line items">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>SKU</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for line_item in order.line_items -%}
+            <tr>
+              <td>
+                <a href="{{ line_item.product.url }}">{{ line_item.title }}</a>
+              </td>
+              <td>{{ line_item.sku | default: '-' }}</td>
+              <td>{{ line_item.original_price | money }}</td>
+              <td>{{ line_item.quantity }}</td>
+              <td>{{ line_item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" style="text-align:right;font-weight:600;">Subtotal</td>
+            <td>{{ order.line_items_subtotal_price | money }}</td>
+          </tr>
+          {%- for discount_application in order.discount_applications -%}
+            <tr>
+              <td colspan="4" style="text-align:right;">Discount ({{ discount_application.title }})</td>
+              <td>-{{ discount_application.total_allocated_amount | money }}</td>
+            </tr>
+          {%- endfor -%}
+          {%- for shipping_method in order.shipping_methods -%}
+            <tr>
+              <td colspan="4" style="text-align:right;">Shipping ({{ shipping_method.title }})</td>
+              <td>{{ shipping_method.price | money }}</td>
+            </tr>
+          {%- endfor -%}
+          <tr>
+            <td colspan="4" style="text-align:right;">Tax</td>
+            <td>{{ order.tax_price | money }}</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align:right;font-weight:700;font-size:1.05rem;">Total</td>
+            <td style="font-weight:700;font-size:1.05rem;">{{ order.total_price | money }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="order-addresses">
+      {%- if order.billing_address -%}
+        <div class="order-address">
+          <h2 class="order-section__title">Billing Address</h2>
+          <address>
+            {{ order.billing_address | format_address }}
+          </address>
+        </div>
+      {%- endif -%}
+      {%- if order.shipping_address -%}
+        <div class="order-address">
+          <h2 class="order-section__title">Shipping Address</h2>
+          <address>
+            {{ order.shipping_address | format_address }}
+          </address>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <a href="/account" class="btn btn--secondary" style="margin-top:2rem;">&larr; Back to Account</a>
+  </div>
+</div>
+
+<style>
+  .order-detail { padding: 2rem 0 4rem; max-width: 900px; }
+  .order-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-text);
+  }
+  .order-section__title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-dark);
+    margin-bottom: 1rem;
+  }
+  .account-table-wrap { overflow-x: auto; margin-bottom: 2rem; }
+  .account-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+  }
+  .account-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    border-bottom: 2px solid var(--color-border);
+  }
+  .account-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .account-table tfoot td { border-bottom: none; }
+  .account-table a { color: var(--color-accent); text-decoration: none; }
+  .account-table a:hover { text-decoration: underline; }
+  .order-addresses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 640px) {
+    .order-addresses { grid-template-columns: 1fr; }
+  }
+  .order-address address {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-style: normal;
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Order",
+  "settings": []
+}
+{% endschema %}

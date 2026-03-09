@@ -1,0 +1,227 @@
+<script>
+  window.__productVariants = {{ product.variants | json }};
+</script>
+
+<div class="container">
+  <div class="product-page">
+    {%- render 'breadcrumb' -%}
+
+    <div class="product-page__grid">
+      <!-- Gallery -->
+      <div class="product-gallery">
+        <div class="product-gallery__main">
+          {%- if product.featured_image -%}
+            <img
+              id="product-main-image"
+              src="{{ product.featured_image | image_url: width: 900 }}"
+              srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 900 }} 900w"
+              sizes="(max-width:900px) 100vw, 50vw"
+              alt="{{ product.featured_image.alt | default: product.title }}"
+              loading="eager"
+              width="900"
+              height="900"
+            >
+          {%- else -%}
+            <div style="width:100%;height:100%;background:var(--color-bg-alt);display:flex;align-items:center;justify-content:center;">
+              <svg width="80" height="80" fill="none" stroke="var(--color-border)" stroke-width="1" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="product-gallery__thumbs">
+            {%- for image in product.images limit: 8 -%}
+              <button
+                class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                aria-label="View image {{ forloop.index }}"
+              >
+                <img
+                  src="{{ image | image_url: width: 200 }}"
+                  alt="{{ image.alt | default: product.title }}"
+                  loading="lazy"
+                  width="200"
+                  height="200"
+                >
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        {%- if product.collections.size > 0 -%}
+          <p class="product-info__collection">
+            <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+            <span>{{ product.title }}</span>
+          </p>
+        {%- endif -%}
+
+        <h1 class="product-info__title">{{ product.title }}</h1>
+
+        <!-- Price -->
+        <div class="product-info__price-row">
+          <span class="product-info__price" id="product-price">
+            {{ product.price | money }}
+          </span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="product-info__price--compare" id="product-compare-price">
+              {{ product.compare_at_price | money }}
+            </span>
+          {%- endif -%}
+        </div>
+
+        <!-- Judge.me / reviews hook -->
+        <div class="product-info__review-row">
+          <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}"></div>
+        </div>
+
+        <!-- Product Form -->
+        <form class="product-form" action="/cart/add" method="post">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          <!-- Variants -->
+          {%- unless product.has_only_default_variant -%}
+            <div class="product-variants">
+              {%- for option in product.options_with_values -%}
+                <div class="variant-group">
+                  <div class="variant-label">
+                    <span>{{ option.name }}</span>
+                    <span id="selected-{{ option.position }}">{{ option.selected_value }}</span>
+                  </div>
+                  <div class="variant-options">
+                    {%- for value in option.values -%}
+                      <button
+                        type="button"
+                        class="variant-option{% if option.selected_value == value %} is-selected{% endif %}"
+                        data-group="{{ option.position }}"
+                        data-value="{{ value }}"
+                        aria-label="{{ option.name }}: {{ value }}"
+                      >
+                        {{ value }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <!-- Qty + ATC -->
+          <div class="product-form__qty-atc">
+            <div class="qty-selector">
+              <button type="button" class="qty-selector__btn" data-action="decrease" aria-label="Decrease quantity">−</button>
+              <input type="number" class="qty-selector__input" name="quantity" value="1" min="1" aria-label="Quantity">
+              <button type="button" class="qty-selector__btn" data-action="increase" aria-label="Increase quantity">+</button>
+            </div>
+            <button
+              type="submit"
+              class="btn btn--primary btn--full product-form__atc"
+              {%- unless product.available -%}disabled{%- endunless -%}
+            >
+              {%- if product.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+            </button>
+          </div>
+
+          <!-- Shipping info -->
+          <div class="product-shipping">
+            <div class="product-shipping__item">
+              <svg class="product-shipping__icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+              Free shipping on orders over $500 CAD
+            </div>
+            <div class="product-shipping__item">
+              <svg class="product-shipping__icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              101+ dealer locations for local pickup
+            </div>
+            <div class="product-shipping__item">
+              <svg class="product-shipping__icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              Engineered for Canadian weather conditions
+            </div>
+          </div>
+        </form>
+
+        <!-- Get a quote link -->
+        <p style="font-size:0.875rem;color:var(--color-text-muted);margin-top:1rem;">
+          Need a custom quote for this product?
+          <a href="/pages/contact" style="color:var(--color-dark);text-decoration:underline;">Contact us</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Tabs: Description / Specs / Shipping -->
+    <div class="product-tabs">
+      <div class="product-tabs__nav" role="tablist">
+        <button class="product-tabs__tab is-active" role="tab" aria-selected="true" aria-controls="tab-description">Description</button>
+        <button class="product-tabs__tab" role="tab" aria-selected="false" aria-controls="tab-specs">Specifications</button>
+        <button class="product-tabs__tab" role="tab" aria-selected="false" aria-controls="tab-shipping">Shipping & Returns</button>
+      </div>
+
+      <div id="tab-description" class="product-tabs__panel is-active" role="tabpanel">
+        {%- if product.description != blank -%}
+          {{ product.description }}
+        {%- else -%}
+          <p>No description available for this product.</p>
+        {%- endif -%}
+      </div>
+
+      <div id="tab-specs" class="product-tabs__panel" role="tabpanel">
+        <ul>
+          {%- for tag in product.tags -%}
+            <li>{{ tag }}</li>
+          {%- endfor -%}
+        </ul>
+        {%- if product.tags.size == 0 -%}
+          <p>Contact us for detailed product specifications.</p>
+        {%- endif -%}
+      </div>
+
+      <div id="tab-shipping" class="product-tabs__panel" role="tabpanel">
+        <h3>Shipping</h3>
+        <p>We offer free shipping on all orders over $500 CAD. Orders are typically processed within 2-3 business days.</p>
+        <p>Glass panels and railing systems can also be picked up from any of our 101+ dealer locations across Canada.</p>
+        <h3>Returns</h3>
+        <p>We accept returns within 30 days of delivery for unused, undamaged products in original packaging. Custom-cut glass panels are non-returnable.</p>
+        <p>To initiate a return, please <a href="/pages/contact">contact us</a> or reach out to your local dealer.</p>
+      </div>
+    </div>
+
+    <!-- Judge.me reviews widget -->
+    <div style="margin-top:4rem;padding-top:3rem;border-top:1px solid var(--color-border);">
+      <div class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}"></div>
+    </div>
+
+    <!-- Related Products -->
+    {%- if product.collections.first.products_count > 1 -%}
+      <div class="related-products">
+        <h2>You Might Also Like</h2>
+        <div class="products-grid">
+          {%- for related_product in product.collections.first.products limit: 4 -%}
+            {%- unless related_product.id == product.id -%}
+              {%- render 'product-card', product: related_product, index: forloop.index -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Page",
+  "settings": []
+}
+{% endschema %}

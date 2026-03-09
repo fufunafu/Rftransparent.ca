@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Card | {{ shop.name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <style>
+    body {
+      background: #F7F6F3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 2rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .gift-card {
+      max-width: 480px;
+      width: 100%;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .gift-card__header {
+      background: linear-gradient(135deg, #1C3330, #2E4E49);
+      color: #fff;
+      padding: 2.5rem 2rem;
+    }
+    .gift-card__shop {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .gift-card__label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+    }
+    .gift-card__image-wrap {
+      padding: 2rem;
+    }
+    .gift-card__image-wrap img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .gift-card__body {
+      padding: 0 2rem 2.5rem;
+    }
+    .gift-card__balance {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      color: #1C3330;
+      margin-bottom: 1rem;
+    }
+    .gift-card__code-wrap {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .gift-card__code {
+      display: inline-block;
+      background: #F7F6F3;
+      border: 2px dashed #E2DED7;
+      border-radius: 6px;
+      padding: 0.75rem 1.5rem;
+      font-family: monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.15em;
+      color: #1C3330;
+      word-break: break-all;
+      user-select: all;
+    }
+    .gift-card__expired {
+      color: #991b1b;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+    .gift-card__qr {
+      margin-top: 1.5rem;
+    }
+    .gift-card__qr img {
+      width: 120px;
+      height: 120px;
+    }
+    .gift-card__print {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.6rem 2rem;
+      background: #C4A46B;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .gift-card__print:hover { opacity: 0.9; }
+    @media print {
+      .gift-card__print { display: none; }
+      body { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="gift-card" role="main">
+    <div class="gift-card__header">
+      <p class="gift-card__shop">{{ shop.name }}</p>
+      <p class="gift-card__label">Gift Card</p>
+    </div>
+
+    {%- if gift_card.image -%}
+      <div class="gift-card__image-wrap">
+        <img
+          src="{{ gift_card.image | image_url: width: 800 }}"
+          alt="Gift card"
+          width="800"
+          height="450"
+          loading="eager"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="gift-card__body">
+      <p class="gift-card__balance">{{ gift_card.balance | money }}</p>
+
+      <div class="gift-card__code-wrap">
+        <span class="gift-card__code" id="gift-card-code">{{ gift_card.code | format_code }}</span>
+      </div>
+
+      {%- if gift_card.expired -%}
+        <p class="gift-card__expired">This gift card has expired.</p>
+      {%- elsif gift_card.enabled == false -%}
+        <p class="gift-card__expired">This gift card is no longer valid.</p>
+      {%- endif -%}
+
+      {%- if gift_card.pass_url -%}
+        <div class="gift-card__qr">
+          <img
+            src="{{ gift_card.qr_identifier | qr_code: 120 }}"
+            alt="QR code for gift card"
+            width="120"
+            height="120"
+          >
+        </div>
+      {%- endif -%}
+
+      <button class="gift-card__print" onclick="window.print();">Print Gift Card</button>
+    </div>
+  </main>
+</body>
+</html>

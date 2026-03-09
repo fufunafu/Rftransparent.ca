@@ -1,0 +1,44 @@
+{%- comment -%} Screen-reader accessible text alternative {%- endcomment -%}
+<div class="sr-only">
+  {%- for block in section.blocks -%}
+    {{ block.settings.text }}{% unless forloop.last %}, {% endunless %}
+  {%- endfor -%}
+</div>
+
+<div class="stats-ticker" aria-hidden="true">
+  <div class="stats-ticker__track">
+    {%- comment -%} Duplicate items for seamless looping {%- endcomment -%}
+    {%- for i in (1..2) -%}
+      {%- for block in section.blocks -%}
+        <div class="stats-ticker__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stats Ticker",
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Stat text", "default": "<strong>101+</strong> Dealer Locations" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Stats Ticker",
+    "blocks": [
+      { "type": "stat", "settings": { "text": "<strong>101+</strong> Dealer Locations Across Canada" } },
+      { "type": "stat", "settings": { "text": "<strong>#1</strong> Glass Railing Supplier in Canada" } },
+      { "type": "stat", "settings": { "text": "<strong>200+</strong> Products Available" } },
+      { "type": "stat", "settings": { "text": "<strong>15+</strong> Years of Industry Experience" } },
+      { "type": "stat", "settings": { "text": "<strong>Free</strong> Shipping on Orders Over $500" } },
+      { "type": "stat", "settings": { "text": "<strong>Custom</strong> Quotes for Every Project" } },
+      { "type": "stat", "settings": { "text": "<strong>Expert</strong> Engineering Support" } }
+    ]
+  }]
+}
+{% endschema %}

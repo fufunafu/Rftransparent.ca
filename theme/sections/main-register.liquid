@@ -1,0 +1,139 @@
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-hero__title">Create Account</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="auth-card">
+    {%- form 'create_customer' -%}
+      {%- if form.errors -%}
+        <div class="auth-errors" role="alert">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="customer-first-name">First Name</label>
+          <input
+            type="text"
+            id="customer-first-name"
+            name="customer[first_name]"
+            autocomplete="given-name"
+            required
+            class="form-input"
+          >
+        </div>
+        <div class="form-field">
+          <label for="customer-last-name">Last Name</label>
+          <input
+            type="text"
+            id="customer-last-name"
+            name="customer[last_name]"
+            autocomplete="family-name"
+            required
+            class="form-input"
+          >
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="customer-email">Email</label>
+        <input
+          type="email"
+          id="customer-email"
+          name="customer[email]"
+          autocomplete="email"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="customer-password">Password</label>
+        <input
+          type="password"
+          id="customer-password"
+          name="customer[password]"
+          autocomplete="new-password"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <button type="submit" class="btn btn--primary auth-submit">Create Account</button>
+
+      <div class="auth-links" style="justify-content:center;">
+        <a href="/account/login" class="auth-link">Already have an account? Sign in</a>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+<style>
+  .auth-card {
+    max-width: 440px;
+    margin: 2rem auto 4rem;
+    padding: 2.5rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+  .auth-errors {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .form-field { margin-bottom: 1.25rem; }
+  .form-field label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin-bottom: 0.35rem;
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  .form-input:focus { border-color: var(--color-accent); }
+  .auth-submit { width: 100%; margin-top: 0.5rem; }
+  .auth-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+  }
+  .auth-link {
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .auth-link:hover { text-decoration: underline; }
+</style>
+
+{% schema %}
+{
+  "name": "Register",
+  "settings": []
+}
+{% endschema %}

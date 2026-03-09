@@ -1,0 +1,130 @@
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-hero__title">My Account</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="account-layout">
+    <div class="account-sidebar">
+      <div class="account-info">
+        <h2 class="account-info__name">{{ customer.name }}</h2>
+        <p class="account-info__email">{{ customer.email }}</p>
+      </div>
+      <nav class="account-nav">
+        <a href="/account/addresses" class="account-nav__link">Manage Addresses</a>
+        <a href="{{ routes.account_logout_url }}" class="account-nav__link account-nav__link--logout">Log Out</a>
+      </nav>
+    </div>
+
+    <div class="account-main">
+      <h2 class="account-section__title">Order History</h2>
+
+      {%- if customer.orders.size == 0 -%}
+        <p style="color:var(--color-text-muted);">You haven&rsquo;t placed any orders yet.</p>
+        <a href="/collections/all-products" class="btn btn--primary" style="margin-top:1rem;">Start Shopping</a>
+      {%- else -%}
+        <div class="account-table-wrap">
+          <table class="account-table" aria-label="Order history">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Fulfillment</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: '%B %d, %Y' }}</td>
+                  <td>{{ order.total_price | money }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .account-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 0;
+  }
+  @media (min-width: 768px) {
+    .account-layout { grid-template-columns: 260px 1fr; gap: 3rem; }
+  }
+  .account-sidebar {
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    align-self: start;
+  }
+  .account-info__name {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-dark);
+    margin-bottom: 0.25rem;
+  }
+  .account-info__email {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .account-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+  .account-nav__link {
+    display: block;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--color-dark);
+    text-decoration: none;
+    border-top: 1px solid var(--color-border);
+  }
+  .account-nav__link:hover { color: var(--color-accent); }
+  .account-nav__link--logout { color: var(--color-text-muted); }
+  .account-section__title {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-dark);
+    margin-bottom: 1.5rem;
+  }
+  .account-table-wrap { overflow-x: auto; }
+  .account-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+  }
+  .account-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    border-bottom: 2px solid var(--color-border);
+  }
+  .account-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .account-table a { color: var(--color-accent); text-decoration: none; }
+  .account-table a:hover { text-decoration: underline; }
+</style>
+
+{% schema %}
+{
+  "name": "Account",
+  "settings": []
+}
+{% endschema %}
