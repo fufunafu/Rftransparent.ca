@@ -3,9 +3,21 @@
     "main": {
       "type": "main-collection",
       "settings": {
-        "products_per_page": 24
+        "products_per_page": 16
+      }
+    },
+    "cta": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Need Help?",
+        "heading": "Not sure which product is right for you?",
+        "text": "Our team can help you choose the perfect glass railing solution for your project. Get a free personalized quote today.",
+        "image": "shopify://shop_images/glass-railing-1.jpg",
+        "image_position": "left",
+        "cta_label": "Get a Quote",
+        "cta_url": "/pages/pricing"
       }
     }
   },
-  "order": ["main"]
+  "order": ["main", "cta"]
 }
