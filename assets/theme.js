@@ -90,7 +90,7 @@ const CartDrawer = {
     });
 
     // Set initial count from page load
-    fetchCart().then(cart => this.updateCount(cart.item_count)).catch(() => {});
+    fetchCart().then(cart => this.updateCount(cart.item_count)).catch(e => { console.warn('[CartDrawer] initial count fetch failed:', e); });
   },
 
   open() {
@@ -270,7 +270,8 @@ document.querySelectorAll('.product-card__quick-add').forEach(btn => {
       btn.textContent = 'Added ✓';
       setTimeout(() => { btn.textContent = originalText; }, 1500);
       CartDrawer.open();
-    } catch {
+    } catch (e) {
+      console.warn('[QuickAdd] failed:', e);
       btn.textContent = originalText;
     }
   });
@@ -476,6 +477,280 @@ document.querySelectorAll('.qty-selector').forEach(selector => {
 /* ============================================================
    INIT
    ============================================================ */
+/* ============================================================
+   KEYBOARD NAVIGATION — Dropdown menus
+   ============================================================ */
+(function initDropdownKeyNav() {
+  const items = document.querySelectorAll('.site-nav__item');
+  items.forEach(item => {
+    const trigger = item.querySelector('.site-nav__link');
+    const dropdown = item.querySelector('.site-nav__dropdown');
+    if (!trigger || !dropdown) return;
+
+    const links = dropdown.querySelectorAll('.site-nav__dropdown-link');
+    if (!links.length) return;
+
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter') {
+        e.preventDefault();
+        dropdown.style.opacity = '1';
+        dropdown.style.visibility = 'visible';
+        dropdown.style.pointerEvents = 'auto';
+        links[0].focus();
+      }
+    });
+
+    links.forEach((link, i) => {
+      link.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (i < links.length - 1) links[i + 1].focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (i > 0) links[i - 1].focus();
+          else trigger.focus();
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          dropdown.style.opacity = '';
+          dropdown.style.visibility = '';
+          dropdown.style.pointerEvents = '';
+          trigger.focus();
+        }
+      });
+    });
+  });
+})();
+
+/* ============================================================
+   PRODUCT IMAGE LIGHTBOX
+   ============================================================ */
+const Lightbox = {
+  el: null,
+  imageEl: null,
+  counterEl: null,
+  images: [],
+  currentIndex: 0,
+
+  init() {
+    this.el = document.querySelector('#product-lightbox');
+    if (!this.el) return;
+
+    this.imageEl = this.el.querySelector('.lightbox__image');
+    this.counterEl = this.el.querySelector('.lightbox__counter');
+
+    // Collect all product images
+    const mainImg = document.querySelector('#product-main-image');
+    const thumbs = document.querySelectorAll('.product-gallery__thumb img');
+    if (thumbs.length) {
+      thumbs.forEach(img => {
+        const src = img.src.replace(/width=\d+/, 'width=1800');
+        this.images.push({ src, alt: img.alt });
+      });
+    } else if (mainImg) {
+      this.images.push({ src: mainImg.dataset.zoomSrc || mainImg.src, alt: mainImg.alt });
+    }
+
+    if (!this.images.length) return;
+
+    // Trigger
+    const trigger = document.querySelector('[data-lightbox-trigger]');
+    if (trigger) trigger.addEventListener('click', () => this.open(this.getActiveIndex()));
+
+    // Navigation
+    this.el.querySelector('.lightbox__close').addEventListener('click', () => this.close());
+    this.el.querySelector('.lightbox__overlay').addEventListener('click', () => this.close());
+    this.el.querySelector('.lightbox__nav--prev').addEventListener('click', () => this.prev());
+    this.el.querySelector('.lightbox__nav--next').addEventListener('click', () => this.next());
+
+    document.addEventListener('keydown', (e) => {
+      if (!this.el.classList.contains('is-open')) return;
+      if (e.key === 'Escape') this.close();
+      if (e.key === 'ArrowLeft') this.prev();
+      if (e.key === 'ArrowRight') this.next();
+    });
+
+    // Swipe support
+    let touchStartX = 0;
+    this.el.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    this.el.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? this.next() : this.prev();
+      }
+    }, { passive: true });
+  },
+
+  getActiveIndex() {
+    const activeThumb = document.querySelector('.product-gallery__thumb.is-active');
+    if (!activeThumb) return 0;
+    const thumbs = Array.from(document.querySelectorAll('.product-gallery__thumb'));
+    return thumbs.indexOf(activeThumb);
+  },
+
+  open(index) {
+    this.currentIndex = index || 0;
+    this.show();
+    this.el.classList.add('is-open');
+    this.el.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    this.el.querySelector('.lightbox__close').focus();
+  },
+
+  close() {
+    this.el.classList.remove('is-open');
+    this.el.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  },
+
+  show() {
+    const img = this.images[this.currentIndex];
+    if (!img) return;
+    this.imageEl.src = img.src;
+    this.imageEl.alt = img.alt;
+    this.counterEl.textContent = this.images.length > 1 ? `${this.currentIndex + 1} / ${this.images.length}` : '';
+  },
+
+  prev() {
+    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    this.show();
+  },
+
+  next() {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    this.show();
+  }
+};
+
+/* ============================================================
+   STICKY ADD-TO-CART BAR
+   ============================================================ */
+(function initStickyATC() {
+  const bar = document.querySelector('#sticky-atc');
+  const form = document.querySelector('.product-form');
+  if (!bar || !form) return;
+
+  const atcBtn = form.querySelector('.product-form__atc');
+  if (!atcBtn) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        bar.classList.remove('is-visible');
+        bar.setAttribute('aria-hidden', 'true');
+      } else {
+        bar.classList.add('is-visible');
+        bar.setAttribute('aria-hidden', 'false');
+      }
+    });
+  }, { threshold: 0 });
+
+  observer.observe(atcBtn);
+
+  // Sticky bar button triggers the real form
+  const stickyBtn = bar.querySelector('[data-sticky-atc]');
+  if (stickyBtn) {
+    stickyBtn.addEventListener('click', () => {
+      atcBtn.click();
+    });
+  }
+})();
+
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
+(function initBackToTop() {
+  const btn = document.querySelector('#back-to-top');
+  if (!btn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      btn.classList.add('is-visible');
+    } else {
+      btn.classList.remove('is-visible');
+    }
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+
+/* ============================================================
+   FOCUS TRAP (Cart Drawer & Mobile Menu)
+   ============================================================ */
+function trapFocus(container) {
+  const focusableEls = container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+  if (!focusableEls.length) return;
+  const first = focusableEls[0];
+  const last = focusableEls[focusableEls.length - 1];
+
+  container.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+}
+
+/* ============================================================
+   VIDEO PLAYER (YouTube / Vimeo lazy embed)
+   ============================================================ */
+(function initVideoPlayers() {
+  document.querySelectorAll('.video-section__wrapper[data-video-id]').forEach(wrapper => {
+    const playBtn = wrapper.querySelector('.video-section__play');
+    if (!playBtn) return;
+
+    playBtn.addEventListener('click', () => {
+      const videoId = wrapper.dataset.videoId;
+      const type = wrapper.dataset.videoType;
+      let iframeSrc = '';
+
+      if (type === 'youtube') {
+        iframeSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      } else if (type === 'vimeo') {
+        iframeSrc = `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+      }
+
+      if (iframeSrc) {
+        const iframe = document.createElement('iframe');
+        iframe.src = iframeSrc;
+        iframe.setAttribute('allow', 'autoplay; encrypted-media');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('title', 'Video');
+        wrapper.innerHTML = '';
+        wrapper.appendChild(iframe);
+      }
+    });
+  });
+})();
+
+/* ============================================================
+   FAQ ANCHOR HANDLING
+   ============================================================ */
+(function initFAQAnchors() {
+  if (window.location.hash && window.location.hash.startsWith('#faq-')) {
+    const target = document.querySelector(window.location.hash);
+    if (target && target.tagName === 'DETAILS') {
+      target.open = true;
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+    }
+  }
+})();
+
+/* ============================================================
+   INIT
+   ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
   CartDrawer.init();
+  Lightbox.init();
+
+  // Focus trap for cart drawer
+  const cartDrawer = document.querySelector('#cart-drawer');
+  if (cartDrawer) trapFocus(cartDrawer);
+
+  // Focus trap for mobile nav
+  const mobileNav = document.querySelector('#mobile-nav');
+  if (mobileNav) trapFocus(mobileNav);
 });

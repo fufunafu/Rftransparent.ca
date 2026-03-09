@@ -65,7 +65,9 @@
       </button>
 
       <!-- Quote CTA (desktop only) -->
-      <a href="/pages/contact" class="btn btn--accent btn--sm" style="display:none" id="header-quote-btn">Get a Quote</a>
+      {%- if section.settings.show_quote_btn -%}
+        <a href="{{ section.settings.quote_btn_url | default: '/pages/contact' }}" class="btn btn--accent btn--sm" style="display:none" id="header-quote-btn">{{ section.settings.quote_btn_label | default: 'Get a Quote' }}</a>
+      {%- endif -%}
 
       <!-- Mobile toggle -->
       <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
@@ -88,7 +90,11 @@
   "name": "Header",
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo image" },
-    { "type": "range", "id": "logo_width", "min": 80, "max": 280, "step": 10, "unit": "px", "label": "Logo width", "default": 160 }
+    { "type": "range", "id": "logo_width", "min": 80, "max": 280, "step": 10, "unit": "px", "label": "Logo width", "default": 160 },
+    { "type": "header", "content": "Quote button" },
+    { "type": "checkbox", "id": "show_quote_btn", "label": "Show quote button", "default": true },
+    { "type": "text", "id": "quote_btn_label", "label": "Button label", "default": "Get a Quote" },
+    { "type": "url", "id": "quote_btn_url", "label": "Button link", "default": "/pages/contact" }
   ]
 }
 {% endschema %}

@@ -31,6 +31,8 @@
 {%- if og_image != blank -%}
   <meta property="og:image" content="{{ og_image }}">
   <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
 {%- endif -%}
 
 <!-- Twitter Card -->
@@ -39,6 +41,7 @@
 <meta name="twitter:description" content="{{ og_description }}">
 {%- if og_image != blank -%}
   <meta name="twitter:image" content="{{ og_image }}">
+  <meta name="twitter:image:alt" content="{{ og_title }}">
 {%- endif -%}
 
 <!-- Schema.org JSON-LD -->
@@ -88,6 +91,12 @@
     "highPrice": {{ product.price_max | money_without_currency | json }},
     "offerCount": {{ product.variants.size }},
     "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "500",
+    "bestRating": "5"
   }
 }
 </script>

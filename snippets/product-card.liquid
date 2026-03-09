@@ -30,11 +30,13 @@
       </div>
     {%- endif -%}
 
+    {%- assign new_threshold = 'now' | date: '%s' | minus: 2592000 -%}
+    {%- assign product_created_ts = card_product.created_at | date: '%s' | plus: 0 -%}
     {%- if card_product.compare_at_price > card_product.price -%}
       <span class="product-card__badge product-card__badge--sale">Sale</span>
     {%- elsif card_product.available == false -%}
       <span class="product-card__badge">Sold Out</span>
-    {%- elsif card_product.created_at > 'now' | date: '%s' | minus: 2592000 | date: '%Y-%m-%d' -%}
+    {%- elsif product_created_ts > new_threshold -%}
       <span class="product-card__badge">New</span>
     {%- endif -%}
 
@@ -50,7 +52,7 @@
   </a>
 
   <!-- Info -->
-  <a href="{{ card_product.url }}" class="product-card__info" style="text-decoration:none;">
+  <a href="{{ card_product.url }}" class="product-card__info">
     {%- if card_product.collections.size > 0 -%}
       <span class="product-card__collection">{{ card_product.collections.first.title }}</span>
     {%- endif -%}
@@ -72,5 +74,12 @@
         <span class="product-card__price--compare">{{ card_product.compare_at_price | money }}</span>
       {%- endif -%}
     </div>
+    {%- if first_variant.inventory_management == 'shopify' and first_variant.inventory_policy == 'deny' -%}
+      {%- if first_variant.inventory_quantity > 0 and first_variant.inventory_quantity <= 5 -%}
+        <span class="product-card__stock product-card__stock--low">Only {{ first_variant.inventory_quantity }} left</span>
+      {%- elsif first_variant.inventory_quantity > 5 -%}
+        <span class="product-card__stock">In stock</span>
+      {%- endif -%}
+    {%- endif -%}
   </a>
 </article>
