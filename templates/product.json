@@ -27,8 +27,7 @@
         "cta_label": "Learn More",
         "cta_url": "/pages/installation-instructions"
       }
-    }
-  },
+    },
     "trust": {
       "type": "trust-badges",
       "blocks": {
