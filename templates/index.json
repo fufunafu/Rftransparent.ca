@@ -1,0 +1,149 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Glass Railing Systems",
+        "heading": "Canada's Premier Glass Railing & Panel Supplier",
+        "subtext": "Premium engineered glass railing solutions trusted by contractors and homeowners across Canada. 101+ dealer locations nationwide.",
+        "cta_primary_label": "Shop Products",
+        "cta_primary_url": "/collections/all-products",
+        "cta_secondary_label": "Get a Quote",
+        "cta_secondary_url": "/pages/contact",
+        "review_score": "4.9",
+        "review_count": "500+"
+      }
+    },
+    "ticker": {
+      "type": "stats-ticker",
+      "settings": {}
+    },
+    "collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "col-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "glass-railing",
+            "tag": "Most Popular"
+          }
+        },
+        "col-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "glass-panels",
+            "tag": "Collection"
+          }
+        },
+        "col-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "railing-hardware",
+            "tag": "Collection"
+          }
+        },
+        "col-4": {
+          "type": "collection",
+          "settings": {
+            "collection": "gate-hardware",
+            "tag": "Collection"
+          }
+        }
+      },
+      "blocks_order": ["col-1", "col-2", "col-3", "col-4"],
+      "settings": {
+        "eyebrow": "Our Collections",
+        "heading": "Engineered for Every Build",
+        "layout": "featured"
+      }
+    },
+    "products": {
+      "type": "featured-products",
+      "blocks": {
+        "p1": { "type": "product", "settings": {} },
+        "p2": { "type": "product", "settings": {} },
+        "p3": { "type": "product", "settings": {} },
+        "p4": { "type": "product", "settings": {} }
+      },
+      "blocks_order": ["p1", "p2", "p3", "p4"],
+      "settings": {
+        "eyebrow": "Bestsellers",
+        "heading": "Our Most Popular Products"
+      }
+    },
+    "about": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "About RF Transparent",
+        "heading": "Built on 15+ Years of Glass Expertise",
+        "text": "RF Transparent is Canada's leading glass railing and panel supplier, trusted by contractors, architects, and homeowners nationwide. Our premium glass systems combine engineered precision with architectural beauty — backed by an expert dealer network spanning 101+ locations from coast to coast.",
+        "image_position": "right",
+        "badge_number": "101+",
+        "badge_label": "Dealer Locations",
+        "stat_1_num": "101+",
+        "stat_1_label": "Dealer Locations",
+        "stat_2_num": "15+",
+        "stat_2_label": "Years of Experience",
+        "stat_3_num": "200+",
+        "stat_3_label": "Products Available",
+        "stat_4_num": "#1",
+        "stat_4_label": "Glass Railing Supplier in Canada",
+        "cta_label": "Learn About Us",
+        "cta_url": "/pages/about"
+      }
+    },
+    "quote": {
+      "type": "quote-cta",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "feature": "Personalized plans for every project" } },
+        "f2": { "type": "feature", "settings": { "feature": "Guided directly to your nearest dealer" } },
+        "f3": { "type": "feature", "settings": { "feature": "Expert engineering support included" } },
+        "f4": { "type": "feature", "settings": { "feature": "Fast response within 1 business day" } }
+      },
+      "blocks_order": ["f1", "f2", "f3", "f4"],
+      "settings": {
+        "eyebrow": "Get Started",
+        "heading": "Get Your Personalized Quote",
+        "text": "Tell us about your project and we'll connect you with your nearest authorized dealer for a smooth, customized experience from start to finish."
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "name": "Michael T.",
+            "location": "Toronto, ON",
+            "text": "Outstanding quality and service. The glass railings look absolutely beautiful and the installation was seamless thanks to their dealer network.",
+            "rating": 5
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "name": "Sarah L.",
+            "location": "Vancouver, BC",
+            "text": "RF Transparent made the entire process easy. The quote was fast, the product is premium, and our deck looks incredible. Highly recommend.",
+            "rating": 5
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "name": "David R.",
+            "location": "Calgary, AB",
+            "text": "Best glass railing supplier in Canada. Used them on three commercial projects and every time the quality and lead times have been excellent.",
+            "rating": 5
+          }
+        }
+      },
+      "blocks_order": ["r1", "r2", "r3"],
+      "settings": {
+        "eyebrow": "Customer Reviews",
+        "heading": "What Our Customers Say"
+      }
+    }
+  },
+  "order": ["hero", "ticker", "collections", "products", "about", "quote", "testimonials"]
+}

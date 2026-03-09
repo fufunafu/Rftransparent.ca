@@ -1,0 +1,94 @@
+<header class="site-header" id="SiteHeader" role="banner">
+  <div class="site-header__inner">
+    <!-- Logo -->
+    <div class="site-header__logo">
+      <a href="/" aria-label="{{ shop.name }} home">
+        {%- if section.settings.logo != blank -%}
+          <img
+            src="{{ section.settings.logo | image_url: width: 240 }}"
+            alt="{{ shop.name }}"
+            width="{{ section.settings.logo_width }}"
+            height="auto"
+            loading="eager"
+          >
+        {%- else -%}
+          <span class="site-header__logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="site-nav" role="navigation" aria-label="Main navigation">
+      {%- for link in linklists.main-menu.links -%}
+        {%- if link.links.size > 0 -%}
+          <div class="site-nav__item">
+            <a href="{{ link.url }}" class="site-nav__link" aria-haspopup="true">
+              {{ link.title }}
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="margin-left:2px;vertical-align:middle;">
+                <path d="M1 1l4 4 4-4"/>
+              </svg>
+            </a>
+            <div class="site-nav__dropdown">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}" class="site-nav__dropdown-link">{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <div class="site-nav__item">
+            <a href="{{ link.url }}" class="site-nav__link"{% if link.active %} aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <!-- Actions -->
+    <div class="site-header__actions">
+      <!-- Search -->
+      <a href="/search" class="header-icon-btn" aria-label="Search">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+      </a>
+
+      <!-- Cart -->
+      <button class="header-icon-btn" data-cart-toggle aria-label="Open cart">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" aria-label="Cart item count" style="display:none">0</span>
+      </button>
+
+      <!-- Quote CTA (desktop only) -->
+      <a href="/pages/contact" class="btn btn--accent btn--sm" style="display:none" id="header-quote-btn">Get a Quote</a>
+
+      <!-- Mobile toggle -->
+      <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  @media (min-width: 1025px) {
+    #header-quote-btn { display: inline-flex !important; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "range", "id": "logo_width", "min": 80, "max": 280, "step": 10, "unit": "px", "label": "Logo width", "default": 160 }
+  ]
+}
+{% endschema %}

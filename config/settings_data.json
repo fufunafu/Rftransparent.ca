@@ -1,0 +1,15 @@
+{
+  "current": {
+    "color_bg": "#F7F6F3",
+    "color_dark": "#1C3330",
+    "color_accent": "#C4A46B",
+    "color_text": "#1A1A18",
+    "heading_font": "DM Serif Display",
+    "cart_type": "drawer",
+    "social_instagram": "",
+    "social_facebook": "",
+    "social_linkedin": "",
+    "social_youtube": ""
+  },
+  "presets": {}
+}

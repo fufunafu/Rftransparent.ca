@@ -1,0 +1,23 @@
+{%- if section.settings.show_bar and section.settings.text != blank -%}
+  <div class="announcement-bar" role="banner">
+    <p>
+      {%- if section.settings.link != blank -%}
+        <a href="{{ section.settings.link }}">{{ section.settings.text }}</a>
+      {%- else -%}
+        {{ section.settings.text }}
+      {%- endif -%}
+    </p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    { "type": "checkbox", "id": "show_bar", "label": "Show announcement bar", "default": true },
+    { "type": "text", "id": "text", "label": "Announcement text", "default": "Free shipping on orders over $500 CAD \u2014 Shop the full catalog" },
+    { "type": "url", "id": "link", "label": "Link (optional)" }
+  ],
+  "presets": [{ "name": "Announcement Bar" }]
+}
+{% endschema %}

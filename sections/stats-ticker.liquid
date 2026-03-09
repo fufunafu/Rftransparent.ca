@@ -1,0 +1,21 @@
+<div class="stats-ticker" aria-hidden="true">
+  <div class="stats-ticker__track">
+    {%- comment -%} Duplicate items for seamless looping {%- endcomment -%}
+    {%- for i in (1..2) -%}
+      <div class="stats-ticker__item"><strong>101+</strong> Dealer Locations Across Canada</div>
+      <div class="stats-ticker__item"><strong>#1</strong> Glass Railing Supplier in Canada</div>
+      <div class="stats-ticker__item"><strong>200+</strong> Products Available</div>
+      <div class="stats-ticker__item"><strong>15+</strong> Years of Industry Experience</div>
+      <div class="stats-ticker__item"><strong>Free</strong> Shipping on Orders Over $500</div>
+      <div class="stats-ticker__item"><strong>Custom</strong> Quotes for Every Project</div>
+      <div class="stats-ticker__item"><strong>Expert</strong> Engineering Support</div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stats Ticker",
+  "presets": [{ "name": "Stats Ticker" }]
+}
+{% endschema %}

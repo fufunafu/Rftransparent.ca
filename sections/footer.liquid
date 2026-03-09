@@ -1,0 +1,113 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="site-footer__main">
+      <!-- Brand column -->
+      <div class="footer-brand">
+        <a href="/" class="footer-brand__logo">{{ shop.name }}</a>
+        <p class="footer-brand__text">{{ section.settings.tagline | default: "Canada's #1 Glass Railing & Panel Supplier. Serving contractors and homeowners nationwide through 101+ dealer locations." }}</p>
+        <div class="footer-social">
+          {%- if section.settings.social_instagram != blank -%}
+            <a href="{{ section.settings.social_instagram }}" class="footer-social__link" aria-label="Instagram" rel="noopener noreferrer" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.social_facebook != blank -%}
+            <a href="{{ section.settings.social_facebook }}" class="footer-social__link" aria-label="Facebook" rel="noopener noreferrer" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.social_linkedin != blank -%}
+            <a href="{{ section.settings.social_linkedin }}" class="footer-social__link" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.social_youtube != blank -%}
+            <a href="{{ section.settings.social_youtube }}" class="footer-social__link" aria-label="YouTube" rel="noopener noreferrer" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 001.95-1.97A29 29 0 0023 12a29 29 0 00-.46-5.58z"/>
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Products column -->
+      <div class="footer-col">
+        <h3 class="footer-col__heading">Products</h3>
+        <ul class="footer-col__links">
+          <li><a href="/collections/glass-railing" class="footer-col__link">Glass Railing</a></li>
+          <li><a href="/collections/glass-panels" class="footer-col__link">Glass Panels</a></li>
+          <li><a href="/collections/railing-hardware" class="footer-col__link">Railing Hardware</a></li>
+          <li><a href="/collections/gate-hardware" class="footer-col__link">Gate Hardware</a></li>
+          <li><a href="/collections/handrails" class="footer-col__link">Handrails</a></li>
+          <li><a href="/collections/all-products" class="footer-col__link">All Products</a></li>
+        </ul>
+      </div>
+
+      <!-- Company column -->
+      <div class="footer-col">
+        <h3 class="footer-col__heading">Company</h3>
+        <ul class="footer-col__links">
+          <li><a href="/pages/about" class="footer-col__link">About Us</a></li>
+          <li><a href="/pages/portfolio" class="footer-col__link">Portfolio</a></li>
+          <li><a href="/pages/events" class="footer-col__link">Events</a></li>
+          <li><a href="/pages/careers" class="footer-col__link">Careers</a></li>
+          <li><a href="/pages/contact" class="footer-col__link">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources column -->
+      <div class="footer-col">
+        <h3 class="footer-col__heading">Resources</h3>
+        <ul class="footer-col__links">
+          <li><a href="/pages/store-locator" class="footer-col__link">Find a Dealer</a></li>
+          <li><a href="/pages/become-a-dealer" class="footer-col__link">Become a Dealer</a></li>
+          <li><a href="/pages/engineering" class="footer-col__link">Engineering</a></li>
+          <li><a href="/pages/installation-instructions" class="footer-col__link">Installation Guides</a></li>
+          <li><a href="/pages/pricing-calculator" class="footer-col__link">Pricing Calculator</a></li>
+          <li><a href="/pages/material-catalog" class="footer-col__link">Material Catalog</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        {%- if linklists.footer.links.size > 0 -%}
+          {%- for link in linklists.footer.links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="/policies/privacy-policy">Privacy Policy</a>
+          <a href="/policies/terms-of-service">Terms of Service</a>
+          <a href="/policies/shipping-policy">Shipping Policy</a>
+        {%- endif -%}
+      </nav>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Brand tagline" },
+    { "type": "header", "content": "Social Media" },
+    { "type": "url", "id": "social_instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "social_facebook", "label": "Facebook URL" },
+    { "type": "url", "id": "social_linkedin", "label": "LinkedIn URL" },
+    { "type": "url", "id": "social_youtube", "label": "YouTube URL" }
+  ]
+}
+{% endschema %}
