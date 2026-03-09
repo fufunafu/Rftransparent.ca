@@ -29,5 +29,16 @@
       }
     }
   },
-  "order": ["main", "cta", "installation"]
+    "trust": {
+      "type": "trust-badges",
+      "blocks": {
+        "b1": { "type": "badge", "settings": { "icon": "truck", "title": "Free Shipping", "description": "On orders over $500 CAD" } },
+        "b2": { "type": "badge", "settings": { "icon": "shield", "title": "Lifetime Warranty", "description": "On all glass panels" } },
+        "b3": { "type": "badge", "settings": { "icon": "award", "title": "10-Year Rust Warranty", "description": "On all hardware" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": {}
+    }
+  },
+  "order": ["main", "trust", "cta", "installation"]
 }

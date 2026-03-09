@@ -9,7 +9,7 @@
 
     <div class="faq__list">
       {%- for block in section.blocks -%}
-        <details class="faq__item reveal" {{ block.shopify_attributes }}>
+        <details class="faq__item reveal" id="faq-{{ block.id }}" {{ block.shopify_attributes }}>
           <summary class="faq__question">
             <span>{{ block.settings.question }}</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

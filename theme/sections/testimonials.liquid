@@ -17,7 +17,11 @@
           </div>
           <blockquote class="testimonial-card__text">"{{ block.settings.text }}"</blockquote>
           <footer class="testimonial-card__author">
-            <div class="testimonial-card__avatar" aria-hidden="true">{{ block.settings.name | slice: 0 }}</div>
+            {%- if block.settings.photo != blank -%}
+              <img class="testimonial-card__photo" src="{{ block.settings.photo | image_url: width: 80 }}" alt="{{ block.settings.name }}" width="40" height="40" loading="lazy">
+            {%- else -%}
+              <div class="testimonial-card__avatar" aria-hidden="true">{{ block.settings.name | slice: 0 }}</div>
+            {%- endif -%}
             <div>
               <div class="testimonial-card__name">{{ block.settings.name }}</div>
               {%- if block.settings.location != blank -%}
@@ -47,7 +51,8 @@
         { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Rating", "default": 5 },
         { "type": "textarea", "id": "text", "label": "Review text", "default": "Outstanding quality and service. The glass railings look absolutely beautiful and the installation was seamless thanks to their dealer network." },
         { "type": "text", "id": "name", "label": "Reviewer name", "default": "Michael T." },
-        { "type": "text", "id": "location", "label": "Location (optional)", "default": "Toronto, ON" }
+        { "type": "text", "id": "location", "label": "Location (optional)", "default": "Toronto, ON" },
+        { "type": "image_picker", "id": "photo", "label": "Photo (optional)" }
       ]
     }
   ],

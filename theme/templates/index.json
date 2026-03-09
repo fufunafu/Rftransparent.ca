@@ -229,6 +229,28 @@
         "heading": "Frequently Asked Questions"
       }
     }
+    },
+    "trust": {
+      "type": "trust-badges",
+      "blocks": {
+        "b1": { "type": "badge", "settings": { "icon": "truck", "title": "Free Shipping", "description": "On orders over $500 CAD" } },
+        "b2": { "type": "badge", "settings": { "icon": "shield", "title": "Lifetime Warranty", "description": "On all glass panels" } },
+        "b3": { "type": "badge", "settings": { "icon": "award", "title": "10-Year Rust Warranty", "description": "On all hardware" } },
+        "b4": { "type": "badge", "settings": { "icon": "map-pin", "title": "101+ Dealers", "description": "Across Canada" } },
+        "b5": { "type": "badge", "settings": { "icon": "lock", "title": "Secure Checkout", "description": "SSL encrypted" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5"],
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Newsletter",
+        "heading": "Stay in the Loop",
+        "text": "Get the latest product updates, installation tips, and exclusive offers delivered to your inbox.",
+        "disclaimer": "No spam, ever. Unsubscribe anytime."
+      }
+    }
   },
-  "order": ["hero", "ticker", "about-1", "collections", "products", "about-2", "quote", "testimonials", "faq"]
+  "order": ["hero", "ticker", "trust", "about-1", "collections", "products", "about-2", "quote", "testimonials", "faq", "newsletter"]
 }
